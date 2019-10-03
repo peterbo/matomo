@@ -257,6 +257,19 @@ class Common
     }
 
     /**
+     * UTF-8 aware strcasecmp()
+     *
+     * @param string $string1
+     * @param string $string2
+     * @return int < 0 if $string1 is less than $string2, > 0 if $string1 is greater than $string2, and 0 if they are equal
+     * @api
+     */
+    public static function mb_strcasecmp($string1, $string2)
+    {
+        return strcmp(self::mb_strtolower($string1), self::mb_strtolower($string2));
+    }
+
+    /**
      * Secure wrapper for unserialize, which by default disallows unserializing classes
      *
      * @param string $string String to unserialize

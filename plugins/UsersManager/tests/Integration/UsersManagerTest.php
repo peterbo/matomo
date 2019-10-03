@@ -192,6 +192,27 @@ class UsersManagerTest extends IntegrationTestCase
     }
 
     /**
+     * @see https://github.com/matomo-org/matomo/issues/14939
+     * change in email address capitalization should work
+     */
+    public function testUpdateUserWithEmailAddressDifferenceInCapitalization()
+    {
+        $login = "testXY";
+        $password = "password1";
+
+        $email1 = "Email@example.com";
+        $email2 = "EmAiL@eXamPle.COM";
+
+        $this->api->addUser("testXY", $password, $email1, "alias.alias");
+
+        FakeAccess::$identity = $login;
+        $this->api->updateUser($login, false, $email2, false, false, $password);
+
+        $user = $this->api->getUser($login);
+        $this->assertEquals($email2, $user['email']);
+    }
+
+    /**
      * Dataprovider for wrong password tests
      */
     public function getWrongPasswordTestData()

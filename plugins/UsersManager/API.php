@@ -923,7 +923,7 @@ class API extends \Piwik\Plugin\API
             $email = $userInfo['email'];
         }
 
-        if ($email != $userInfo['email']) {
+        if (Common::mb_strcasecmp($email, $userInfo['email']) != 0) {
             $this->checkEmail($email);
             $changeShouldRequirePasswordConfirmation = true;
         }
